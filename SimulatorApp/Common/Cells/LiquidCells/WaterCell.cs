@@ -1,9 +1,17 @@
-﻿namespace SimulatorApp.Common.Cells.LiquidCells;
+﻿using SimulatorApp.Application;
+
+namespace SimulatorApp.Common.Cells.LiquidCells;
 
 public class WaterCell : LiquidCell
 {
     public WaterCell(int x, int y) : base(x, y)
     {
         SetColor(Colors.Water);
+    }
+
+    public override void Update(CellularAutomata automata)
+    {
+        SetColor(Colors.WaterDependingOnDepth(Y));
+        base.Update(automata);
     }
 }

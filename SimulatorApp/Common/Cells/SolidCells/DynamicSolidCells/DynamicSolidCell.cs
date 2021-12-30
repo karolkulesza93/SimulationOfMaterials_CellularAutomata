@@ -1,4 +1,5 @@
 ﻿using SimulatorApp.Application;
+using SimulatorApp.Common.Cells.LiquidCells;
 
 namespace SimulatorApp.Common.Cells.SolidCells.DynamicSolidCells;
 
@@ -18,12 +19,12 @@ public abstract class DynamicSolidCell : SolidCell
         // move down
         for (int i = 1; i <= vVel; i++)
         {
-            p = automata.GetCell(X, Y + (int)vVel);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+            p = automata.GetCell(X, Y + i);
+            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
+                automata.SwapCells(p.X, p.Y, X, Y);
                 if (i == (int)vVel)
                 {
-                    automata.SwapCells(p.X, p.Y, X, Y);
                     return;
                 }
                 continue;
@@ -37,7 +38,7 @@ public abstract class DynamicSolidCell : SolidCell
         {
             // slide down-left
             p = automata.GetCell(X - 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);
@@ -45,7 +46,7 @@ public abstract class DynamicSolidCell : SolidCell
             }
             // slide down-right
             p = automata.GetCell(X + 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);
@@ -56,7 +57,7 @@ public abstract class DynamicSolidCell : SolidCell
         {
             // slide down-right
             p = automata.GetCell(X + 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);
@@ -64,7 +65,7 @@ public abstract class DynamicSolidCell : SolidCell
             }
             // slide down-left
             p = automata.GetCell(X - 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);

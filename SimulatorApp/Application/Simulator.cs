@@ -1,6 +1,9 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using SimulatorApp.Common;
+using SimulatorApp.Common.Cells.LiquidCells;
+using SimulatorApp.Common.Cells.SolidCells.DynamicSolidCells;
 
 namespace SimulatorApp.Application;
 
@@ -44,7 +47,7 @@ public class Simulator
     public void ClearWindow()
     {
        _window.DispatchEvents();
-       _window.Clear(Color.Black);
+       _window.Clear(Colors.Background);
     }
 
     private void OnClosed(object sender, EventArgs e)
@@ -64,9 +67,14 @@ public class Simulator
 
     private void OnMouseButtonPressed(object sender, MouseButtonEventArgs e)
     {
-        if (e.Button == Mouse.Button.Left)
+        switch (e.Button)
         {
-            _automata.SetAreaAs(e.X, e.Y, 5, 5f);
+            case Mouse.Button.Left:
+                _automata.SetAreaAs(typeof(SandCell), e.X, e.Y, 5, 5f);
+                break;
+            case Mouse.Button.Right:
+                _automata.SetAreaAs(typeof(WaterCell), e.X, e.Y, 5, 5f);
+                break;
         }
     }
 }

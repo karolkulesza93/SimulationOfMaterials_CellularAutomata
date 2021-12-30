@@ -9,9 +9,14 @@ public static class Colors
         get => Settings.LightMode ? Color.Black : Color.White;
     }
 
-    public static Color Air
+    public static Color Background
     {
         get => Settings.LightMode ? new Color(198, 214, 244) : new Color(16, 21, 35);
+    }
+
+    public static Color Air
+    {
+        get => new Color(0, 0, 0, 0);
     }
     
     public static Color Sand
@@ -25,7 +30,13 @@ public static class Colors
 
     public static Color Water
     {
-        get => new Color(0, 180, 255);
+        get => new Color(0, 180, 255, 120);
+    }
+
+    public static Color WaterDependingOnDepth(int d)
+    {
+        float x = (float)d / (float)Settings.Y;
+        return new Color(0, (byte)(255 - 180 * x), (byte)(255 - 255 * x), 120);
     }
 
     public static Color Rock

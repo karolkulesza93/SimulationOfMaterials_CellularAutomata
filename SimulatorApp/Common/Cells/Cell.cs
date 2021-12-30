@@ -34,11 +34,20 @@ public abstract class Cell : Drawable
 
     public void AddToVVel(float amount)
     {
-        if (Math.Abs(amount) + Math.Abs(vVel) > Settings.MaxVelocity)
+        if (Math.Abs(amount) + Math.Abs(vVel) > Settings.MaxVelocityV)
         {
             return;
         }
         vVel += amount;
+    }
+
+    public void AddToHVel(float amount)
+    {
+        if (Math.Abs(amount) + Math.Abs(hVel) > Settings.MaxVelocityH)
+        {
+            return;
+        }
+        hVel += amount;
     }
 
     public void SwapWith(Cell toSwap)
@@ -48,7 +57,10 @@ public abstract class Cell : Drawable
         toSwap.cell.Position = tmp;
     }
 
-    public virtual void Update(CellularAutomata automata) { }
+    public virtual void Update(CellularAutomata automata)
+    {
+
+    }
 
     public void Draw(RenderTarget target, RenderStates states) => cell.Draw(target, states);
 }
