@@ -1,4 +1,4 @@
-﻿namespace SimulatorApp.Common.Cells.SolidCells;
+﻿namespace SimulatorApp.Common.Cells;
 
 public abstract class SolidCell : Cell
 {

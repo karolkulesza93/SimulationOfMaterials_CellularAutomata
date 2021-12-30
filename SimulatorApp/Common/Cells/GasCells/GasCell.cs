@@ -1,4 +1,4 @@
-﻿namespace SimulatorApp.Common.Cells.GasCells;
+﻿namespace SimulatorApp.Common.Cells;
 
 public abstract class GasCell : Cell
 {

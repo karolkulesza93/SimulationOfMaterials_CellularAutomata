@@ -1,9 +1,6 @@
 ﻿using SFML.Graphics;
 using SimulatorApp.Common;
 using SimulatorApp.Common.Cells;
-using SimulatorApp.Common.Cells.LiquidCells;
-using SimulatorApp.Common.Cells.SolidCells.DynamicSolidCells;
-using SimulatorApp.Common.Cells.SolidCells.StaticSolidCells;
 
 namespace SimulatorApp.Application;
 
@@ -22,7 +19,7 @@ public class CellularAutomata : Drawable
         {
             for (int x = 0; x < Cells.GetUpperBound(0); x++)
             {
-                if (y > 55 && y < 65 && x > 40 && x < 60)
+                if (y > 75 && y < 80 && x > 40 && x < 160)
                 {
                     Cells[x, y] = new RockCell(x, y);
                     continue;
@@ -56,10 +53,10 @@ public class CellularAutomata : Drawable
 
     private void SingleUpdateOperation(int x, int y)
     {
-        if (x == 100 && y == 20)
-        {
-            Cells[x, y] = new SandCell(x, y);
-        }
+        //if (x == 100 && y == 20)
+        //{
+        //    Cells[x, y] = new SandCell(x, y);
+        //}
 
         var type = Cells[x, y].GetType();
         if (type == typeof(AirCell) || type.IsSubclassOf(typeof(StaticSolidCell)))
@@ -76,6 +73,7 @@ public class CellularAutomata : Drawable
             for (int x = 0; x < Cells.GetUpperBound(0); x++)
             {
                 Cells[x, y].Draw(target, states);
+                Cells[x, y].Prepare();
             }
         }
     }
@@ -134,6 +132,7 @@ public class CellularAutomata : Drawable
                 {
                     case nameof(SandCell): Cells[x, y] = new SandCell(x, y); break;
                     case nameof(WaterCell): Cells[x, y] = new WaterCell(x, y); break;
+                    case nameof(RockCell): Cells[x, y] = new RockCell(x, y); break;
                 }
             }
         }

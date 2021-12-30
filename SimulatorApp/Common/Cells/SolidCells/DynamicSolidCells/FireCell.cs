@@ -2,16 +2,18 @@
 
 namespace SimulatorApp.Common.Cells;
 
-public class WaterCell : LiquidCell
+public class FireCell : DynamicSolidCell
 {
-    public WaterCell(int x, int y) : base(x, y)
+    public FireCell(int x, int y) : base(x, y)
     {
-        SetColor(Colors.Water);
+        SetColor(Colors.Fire);
     }
 
     public override void Update(CellularAutomata automata)
     {
-        SetColor(Colors.WaterDependingOnDepth(Y));
         base.Update(automata);
+        SetColor(Colors.Fire);
+
+        // TODO
     }
 }

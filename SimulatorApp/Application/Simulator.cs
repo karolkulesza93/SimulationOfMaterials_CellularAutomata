@@ -2,8 +2,6 @@
 using SFML.System;
 using SFML.Window;
 using SimulatorApp.Common;
-using SimulatorApp.Common.Cells.LiquidCells;
-using SimulatorApp.Common.Cells.SolidCells.DynamicSolidCells;
 
 namespace SimulatorApp.Application;
 
@@ -11,6 +9,7 @@ public class Simulator
 {
     private RenderWindow window;
     private CellularAutomata automata;
+    private InputHandler inputHandler;
 
     public Simulator()
     {
@@ -26,6 +25,8 @@ public class Simulator
         window.Closed += OnClosed;
         window.KeyPressed += OnKeyPress;
         window.MouseButtonPressed += OnMouseButtonPressed;
+
+        inputHandler = new InputHandler(automata);
     }
 
     public void MainLoop()
@@ -57,24 +58,16 @@ public class Simulator
 
     private void OnKeyPress(object sender, KeyEventArgs e)
     {
-        switch (e.Code)
+        if (e.Code == Keyboard.Key.Escape)
         {
-            case Keyboard.Key.Escape:
-                window.Close();
-                break;
+            window.Close();
+            return;
         }
+        inputHandler.HandleKeyboardPress(e.Code);
     }
 
     private void OnMouseButtonPressed(object sender, MouseButtonEventArgs e)
     {
-        switch (e.Button)
-        {
-            case Mouse.Button.Left:
-                automata.SetAreaAs(typeof(SandCell), e.X, e.Y, 5, 5f);
-                break;
-            case Mouse.Button.Right:
-                automata.SetAreaAs(typeof(WaterCell), e.X, e.Y, 5, 5f);
-                break;
-        }
+        inputHandler.HandleMouseClick(e.Button, e.X, e.Y);
     }
 }

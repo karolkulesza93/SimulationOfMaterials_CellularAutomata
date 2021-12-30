@@ -1,6 +1,6 @@
 ﻿using SimulatorApp.Application;
 
-namespace SimulatorApp.Common.Cells.LiquidCells;
+namespace SimulatorApp.Common.Cells;
 
 public abstract class LiquidCell : Cell
 {
@@ -11,6 +11,9 @@ public abstract class LiquidCell : Cell
 
     public override void Update(CellularAutomata automata)
     {
+        if (hasBeenUpdated) return;
+        hasBeenUpdated = true;
+
         Cell p;
 
         AddToVVel(Settings.Gravity);
@@ -52,16 +55,7 @@ public abstract class LiquidCell : Cell
                 hVel = vVel;
                 return;
             }
-            // move left
-            p = automata.GetCell(X - 1, Y);
-            if (p != null && (p.GetType() == typeof(AirCell)))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                hVel -= Settings.LiquidSpeed;
-                return;
-            }
-            hVel = 0;
+
         }
         else
         {
@@ -83,6 +77,35 @@ public abstract class LiquidCell : Cell
                 hVel = -vVel;
                 return;
             }
+
+        }
+
+        // multiple horizontal movment
+        if (hVel < 0)
+        {
+
+        }
+        else if (hVel > 0)
+        {
+
+        }
+
+        // horizontal movment
+        if (!side)
+        {
+            // move left
+            p = automata.GetCell(X - 1, Y);
+            if (p != null && (p.GetType() == typeof(AirCell)))
+            {
+                automata.SwapCells(p.X, p.Y, X, Y);
+                AddToVVel(Settings.Gravity);
+                hVel -= Settings.LiquidSpeed;
+                return;
+            }
+            hVel = 0;
+        }
+        else
+        {
             //move right
             p = automata.GetCell(X + 1, Y);
             if (p != null && (p.GetType() == typeof(AirCell)))
@@ -94,6 +117,7 @@ public abstract class LiquidCell : Cell
             }
             hVel = 0;
         }
+
         vVel = 1;
     }
 }

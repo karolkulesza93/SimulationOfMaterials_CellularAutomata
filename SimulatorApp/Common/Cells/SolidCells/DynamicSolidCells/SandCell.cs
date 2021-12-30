@@ -1,6 +1,4 @@
-﻿using SimulatorApp.Application;
-
-namespace SimulatorApp.Common.Cells.SolidCells.DynamicSolidCells;
+﻿namespace SimulatorApp.Common.Cells;
 
 public class SandCell : DynamicSolidCell
 {

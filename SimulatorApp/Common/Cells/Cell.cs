@@ -16,6 +16,7 @@ public abstract class Cell : Drawable
     }
 
     protected readonly RectangleShape cell;
+    protected bool hasBeenUpdated;
     protected int life;
     protected float hVel;
     protected float vVel;
@@ -26,6 +27,7 @@ public abstract class Cell : Drawable
         cell.Position = new Vector2f(x, y);
         hVel = 0;
         vVel = 0;
+        hasBeenUpdated = false;
     }
 
     public void SetPosition(int x, int y) => cell.Position = new Vector2f(x, y);
@@ -57,7 +59,17 @@ public abstract class Cell : Drawable
         toSwap.cell.Position = tmp;
     }
 
+    public void Prepare()
+    {
+        hasBeenUpdated = false;
+    }
+
     public virtual void Update(CellularAutomata automata)
+    {
+
+    }
+
+    public virtual void Heat()
     {
 
     }

@@ -1,7 +1,6 @@
 ﻿using SimulatorApp.Application;
-using SimulatorApp.Common.Cells.LiquidCells;
 
-namespace SimulatorApp.Common.Cells.SolidCells.DynamicSolidCells;
+namespace SimulatorApp.Common.Cells;
 
 public abstract class DynamicSolidCell : SolidCell
 {
@@ -12,6 +11,9 @@ public abstract class DynamicSolidCell : SolidCell
 
     public override void Update(CellularAutomata automata)
     {
+        if (hasBeenUpdated) return;
+        hasBeenUpdated = true;
+
         Cell p;
 
         AddToVVel(Settings.Gravity);
