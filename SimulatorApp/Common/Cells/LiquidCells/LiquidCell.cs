@@ -21,14 +21,13 @@ public abstract class LiquidCell : Cell
             p = automata.GetCell(X, Y + i);
             if (p != null && (p.GetType() == typeof(AirCell)))
             {
+                automata.SwapCells(p.X, p.Y, X, Y);
                 if (i == (int)vVel)
                 {
-                    automata.SwapCells(p.X, p.Y, X, Y);
                     return;
                 }
                 continue;
             }
-            vVel = 1;
         }
 
         // slides
@@ -41,7 +40,7 @@ public abstract class LiquidCell : Cell
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);
-                hVel = -1;
+                hVel = -vVel;
                 return;
             }
             // slide down-right
@@ -50,26 +49,10 @@ public abstract class LiquidCell : Cell
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);
-                hVel = 1;
+                hVel = vVel;
                 return;
             }
             // move left
-            for (int i = -1; i >= hVel; i--)
-            {
-                p = automata.GetCell(X, Y + (int)hVel);
-                if (p != null && (p.GetType() == typeof(AirCell)))
-                {
-                    if (i == (int)vVel)
-                    {
-                        automata.SwapCells(p.X, p.Y, X, Y);
-                        return;
-                    }
-                    continue;
-                }
-            }
-
-
-
             p = automata.GetCell(X - 1, Y);
             if (p != null && (p.GetType() == typeof(AirCell)))
             {
@@ -78,6 +61,7 @@ public abstract class LiquidCell : Cell
                 hVel -= Settings.LiquidSpeed;
                 return;
             }
+            hVel = 0;
         }
         else
         {
@@ -87,7 +71,7 @@ public abstract class LiquidCell : Cell
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);
-                hVel = 1;
+                hVel = vVel;
                 return;
             }
             // slide down-left
@@ -96,16 +80,10 @@ public abstract class LiquidCell : Cell
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
                 AddToVVel(Settings.Gravity);
-                hVel = -1;
+                hVel = -vVel;
                 return;
             }
             //move right
-            for (int i = 0; i <= hVel; i++)
-            {
-
-            }
-
-
             p = automata.GetCell(X + 1, Y);
             if (p != null && (p.GetType() == typeof(AirCell)))
             {
@@ -114,6 +92,7 @@ public abstract class LiquidCell : Cell
                 hVel += Settings.LiquidSpeed;
                 return;
             }
+            hVel = 0;
         }
         vVel = 1;
     }

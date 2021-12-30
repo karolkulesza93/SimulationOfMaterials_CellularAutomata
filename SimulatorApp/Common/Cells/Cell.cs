@@ -28,7 +28,7 @@ public abstract class Cell : Drawable
         vVel = 0;
     }
 
-    public void SetPosition(int x, int y) => cell.Position = new Vector2f(x,y);
+    public void SetPosition(int x, int y) => cell.Position = new Vector2f(x, y);
 
     public void SetColor(Color color) => cell.FillColor = color;
 

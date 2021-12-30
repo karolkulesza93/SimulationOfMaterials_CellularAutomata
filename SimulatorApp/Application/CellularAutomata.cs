@@ -24,7 +24,7 @@ public class CellularAutomata : Drawable
             {
                 if (y > 55 && y < 65 && x > 40 && x < 60)
                 {
-                    Cells[x, y] = new RockCell(x,y);
+                    Cells[x, y] = new RockCell(x, y);
                     continue;
                 }
                 Cells[x, y] = new AirCell(x, y);
@@ -34,7 +34,7 @@ public class CellularAutomata : Drawable
 
     public void Update()
     {
-        for (int y = Cells.GetUpperBound(1) - 1; y >= 0 ; y--)
+        for (int y = Cells.GetUpperBound(1) - 1; y >= 0; y--)
         {
             if (dir)
             {
@@ -121,14 +121,14 @@ public class CellularAutomata : Drawable
         {
             int x = xMouse + Rand.Int(-radius, radius);
             int y = yMouse + Rand.Int(-radius, radius);
-            
+
             if (xMouse + x < 0 || x > Settings.X - 1 || y < 0 || y > Settings.Y - 1)
             {
                 continue;
             }
 
             var cell = Cells[x, y];
-            if (cell != null && radius >= Math.Sqrt(Math.Pow(x - xMouse , 2) + Math.Pow(y - yMouse, 2)))
+            if (cell != null && radius >= Math.Sqrt(Math.Pow(x - xMouse, 2) + Math.Pow(y - yMouse, 2)))
             {
                 switch (type.Name)
                 {

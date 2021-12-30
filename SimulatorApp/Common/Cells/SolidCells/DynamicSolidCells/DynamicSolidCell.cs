@@ -23,13 +23,16 @@ public abstract class DynamicSolidCell : SolidCell
             if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
                 automata.SwapCells(p.X, p.Y, X, Y);
+                if (p.GetType().IsSubclassOf(typeof(LiquidCell)))
+                {
+                    vVel = 1;
+                }
                 if (i == (int)vVel)
                 {
                     return;
                 }
                 continue;
             }
-            vVel = 1;
         }
 
         // slides

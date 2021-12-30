@@ -8,5 +8,6 @@
     public static int MaxVelocityH = 3;
     public static float Gravity = 0.4f;
     public static float LiquidSpeed = 0.3f;
+    public static float Friction = 0.2f;
     public static bool LightMode = true;
 }
