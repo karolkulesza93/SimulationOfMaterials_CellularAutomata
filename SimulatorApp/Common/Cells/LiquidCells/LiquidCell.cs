@@ -42,7 +42,7 @@ public abstract class LiquidCell : Cell
             if (c != null && (c.GetType() == typeof(AirCell)))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
-                AddToYVel(Settings.Gravity);
+                AddToYVel(Settings.Gravity * 0.5f);
                 xVel = side * yVel;
                 return;
             }
@@ -51,15 +51,28 @@ public abstract class LiquidCell : Cell
         // horizontal
         for (int i = 0; i < 2; i++)
         {
-            c = automata.GetCell(X + side, Y);
-            if (c != null && (c.GetType() == typeof(AirCell)))
+            for (int j = 1; j <= Math.Abs(xVel) + 1; j++)
             {
-                automata.SwapCells(c.X, c.Y, X, Y);
-                AddToYVel(Settings.Gravity);
                 xVel += side * Settings.LiquidSpeed;
-                return;
+                c = automata.GetCell(X + side * j, Y);
+                if (c != null && (c.GetType() == typeof(AirCell)))
+                {
+                    automata.SwapCells(c.X, c.Y, X, Y);
+                    if (j == Math.Abs(xVel) + 1)
+                    {
+                        return;
+                    }
+                    c = automata.GetCell(X + side, Y + 1);
+                    if (c != null && (c.GetType() == typeof(AirCell)))
+                    {
+                        automata.SwapCells(c.X, c.Y, X, Y);
+                        AddToYVel(Settings.Gravity * 0.5f);
+                        xVel = side * yVel;
+                        return;
+                    }
+                    continue;
+                }
             }
-            xVel = 0;
             side = -side;
         }
 
