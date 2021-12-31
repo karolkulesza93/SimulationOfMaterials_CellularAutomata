@@ -19,11 +19,6 @@ public class CellularAutomata : Drawable
         {
             for (int x = 0; x < Cells.GetUpperBound(0); x++)
             {
-                if (y > 75 && y < 80 && x > 40 && x < 160)
-                {
-                    Cells[x, y] = new RockCell(x, y);
-                    continue;
-                }
                 Cells[x, y] = new AirCell(x, y);
             }
         }
@@ -51,13 +46,19 @@ public class CellularAutomata : Drawable
         dir = !dir;
     }
 
+    public void Reinitialize()
+    {
+        for (int y = 0; y < Cells.GetUpperBound(1); y++)
+        {
+            for (int x = 0; x < Cells.GetUpperBound(0); x++)
+            {
+                Cells[x, y] = new AirCell(x, y);
+            }
+        }
+    }
+
     private void SingleUpdateOperation(int x, int y)
     {
-        //if (x == 100 && y == 20)
-        //{
-        //    Cells[x, y] = new SandCell(x, y);
-        //}
-
         var type = Cells[x, y].GetType();
         if (type == typeof(AirCell) || type.IsSubclassOf(typeof(StaticSolidCell)))
         {
@@ -120,7 +121,7 @@ public class CellularAutomata : Drawable
             int x = xMouse + Rand.Int(-radius, radius);
             int y = yMouse + Rand.Int(-radius, radius);
 
-            if (xMouse + x < 0 || x > Settings.X - 1 || y < 0 || y > Settings.Y - 1)
+            if (x < 0 || x > Settings.X - 1 || y < 0 || y > Settings.Y - 1)
             {
                 continue;
             }

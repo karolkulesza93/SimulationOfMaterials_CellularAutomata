@@ -22,7 +22,7 @@ public class InputHandler
                 automata.SetAreaAs(currentType, xPos, yPos, 2, 1f);
                 break;
             case Mouse.Button.Right:
-                automata.SetAreaAs(currentType, xPos, yPos, 5, 5f);
+                automata.SetAreaAs(currentType, xPos, yPos, 4, 5f);
                 break;
             case Mouse.Button.Middle:
                 automata.SetAreaAs(currentType, xPos, yPos, 5, 0.3f);
@@ -38,13 +38,19 @@ public class InputHandler
 
     public void HandleKeyboardPress(Keyboard.Key key)
     {
-        Console.ForegroundColor = ConsoleColor.Gray;
+        if (key == Keyboard.Key.Delete)
+        {
+            automata.Reinitialize();
+            Console.WriteLine($"{DateTime.Now:HH:mm:ss.fF} Automata reinitialized");
+            return;
+        }
         Console.Write($"{DateTime.Now:HH:mm:ss.fF} ");
         switch (key)
         {
             case Keyboard.Key.W: currentType = typeof(WaterCell); Console.ForegroundColor = ConsoleColor.Blue; break;
             case Keyboard.Key.S: currentType = typeof(SandCell); Console.ForegroundColor = ConsoleColor.Yellow; break;
             case Keyboard.Key.R: currentType = typeof(RockCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
+            default: Console.WriteLine("No action\n"); return;
         }
         Console.Write($"{currentType.Name}");
         Console.ForegroundColor = ConsoleColor.Gray;

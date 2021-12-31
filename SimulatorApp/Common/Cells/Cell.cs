@@ -18,15 +18,15 @@ public abstract class Cell : Drawable
     protected readonly RectangleShape cell;
     protected bool hasBeenUpdated;
     protected int life;
-    protected float hVel;
-    protected float vVel;
+    protected float xVel;
+    protected float yVel;
 
     public Cell(int x, int y)
     {
         cell = new RectangleShape(new Vector2f(1, 1));
         cell.Position = new Vector2f(x, y);
-        hVel = 0;
-        vVel = 0;
+        xVel = 0;
+        yVel = 0;
         hasBeenUpdated = false;
     }
 
@@ -34,22 +34,22 @@ public abstract class Cell : Drawable
 
     public void SetColor(Color color) => cell.FillColor = color;
 
-    public void AddToVVel(float amount)
+    public void AddToYVel(float amount)
     {
-        if (Math.Abs(amount) + Math.Abs(vVel) > Settings.MaxVelocityV)
+        if (Math.Abs(amount) + Math.Abs(yVel) > Settings.MaxVelocityV)
         {
             return;
         }
-        vVel += amount;
+        yVel += amount;
     }
 
-    public void AddToHVel(float amount)
+    public void AddToXVel(float amount)
     {
-        if (Math.Abs(amount) + Math.Abs(hVel) > Settings.MaxVelocityH)
+        if (Math.Abs(amount) + Math.Abs(xVel) > Settings.MaxVelocityH)
         {
             return;
         }
-        hVel += amount;
+        xVel += amount;
     }
 
     public void SwapWith(Cell toSwap)

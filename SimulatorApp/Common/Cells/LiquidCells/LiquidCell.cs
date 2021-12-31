@@ -14,18 +14,18 @@ public abstract class LiquidCell : Cell
         if (hasBeenUpdated) return;
         hasBeenUpdated = true;
 
-        Cell p;
+        Cell c;
 
-        AddToVVel(Settings.Gravity);
+        AddToYVel(Settings.Gravity);
 
-        // move down
-        for (int i = 1; i <= vVel; i++)
+        // down
+        for (int i = 1; i <= yVel; i++)
         {
-            p = automata.GetCell(X, Y + i);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+            c = automata.GetCell(X, Y + i);
+            if (c != null && (c.GetType() == typeof(AirCell)))
             {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                if (i == (int)vVel)
+                automata.SwapCells(c.X, c.Y, X, Y);
+                if (i == (int)yVel)
                 {
                     return;
                 }
@@ -34,90 +34,36 @@ public abstract class LiquidCell : Cell
         }
 
         // slides
-        bool side = Rand.Bool();
-        if (!side)
+        int side = Rand.Bool() ? 1 : -1;
+        for (int i = 0; i < 2; i++)
         {
-            // slide down-left
-            p = automata.GetCell(X - 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+            side = -side;
+            c = automata.GetCell(X + side, Y + 1);
+            if (c != null && (c.GetType() == typeof(AirCell)))
             {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                hVel = -vVel;
+                automata.SwapCells(c.X, c.Y, X, Y);
+                AddToYVel(Settings.Gravity);
+                xVel = side * yVel;
                 return;
             }
-            // slide down-right
-            p = automata.GetCell(X + 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
+        }
+
+        // horizontal
+        for (int i = 0; i < 2; i++)
+        {
+            c = automata.GetCell(X + side, Y);
+            if (c != null && (c.GetType() == typeof(AirCell)))
             {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                hVel = vVel;
+                automata.SwapCells(c.X, c.Y, X, Y);
+                AddToYVel(Settings.Gravity);
+                xVel += side * Settings.LiquidSpeed;
                 return;
             }
-
-        }
-        else
-        {
-            // slide down-right
-            p = automata.GetCell(X + 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                hVel = vVel;
-                return;
-            }
-            // slide down-left
-            p = automata.GetCell(X - 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell)))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                hVel = -vVel;
-                return;
-            }
-
+            xVel = 0;
+            side = -side;
         }
 
-        // multiple horizontal movment
-        if (hVel < 0)
-        {
-
-        }
-        else if (hVel > 0)
-        {
-
-        }
-
-        // horizontal movment
-        if (!side)
-        {
-            // move left
-            p = automata.GetCell(X - 1, Y);
-            if (p != null && (p.GetType() == typeof(AirCell)))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                hVel -= Settings.LiquidSpeed;
-                return;
-            }
-            hVel = 0;
-        }
-        else
-        {
-            //move right
-            p = automata.GetCell(X + 1, Y);
-            if (p != null && (p.GetType() == typeof(AirCell)))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                hVel += Settings.LiquidSpeed;
-                return;
-            }
-            hVel = 0;
-        }
-
-        vVel = 1;
+        yVel = 1;
+        xVel = 0;
     }
 }

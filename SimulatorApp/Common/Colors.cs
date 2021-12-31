@@ -36,7 +36,7 @@ public static class Colors
     public static Color WaterDependingOnDepth(int d)
     {
         float x = (float)d / (float)Settings.Y;
-        return new Color(0, (byte)(255 - 255 * x), (byte)(255 - 255 * x), 120);
+        return new Color(0, (byte)(255 - 150 * x), (byte)(255 - 255 * x), 120);
     }
 
     public static Color Rock

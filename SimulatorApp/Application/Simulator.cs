@@ -18,7 +18,6 @@ public class Simulator
 
         automata = new CellularAutomata();
         window = new RenderWindow(new VideoMode((uint)(x * Settings.Scale), (uint)(y * Settings.Scale)), "Simulator", Styles.Default);
-        window.SetFramerateLimit((uint)Settings.FPS);
         window.SetView(new View(new FloatRect(0, 0, x, y)));
         window.GetView().Size = new Vector2f(Settings.X * Settings.Scale, Settings.Y * Settings.Scale);
 

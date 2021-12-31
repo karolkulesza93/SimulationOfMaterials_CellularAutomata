@@ -14,22 +14,22 @@ public abstract class DynamicSolidCell : SolidCell
         if (hasBeenUpdated) return;
         hasBeenUpdated = true;
 
-        Cell p;
+        Cell c;
 
-        AddToVVel(Settings.Gravity);
+        AddToYVel(Settings.Gravity);
 
-        // move down
-        for (int i = 1; i <= vVel; i++)
+        // down
+        for (int i = 1; i <= yVel; i++)
         {
-            p = automata.GetCell(X, Y + i);
-            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
+            c = automata.GetCell(X, Y + i);
+            if (c != null && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                if (p.GetType().IsSubclassOf(typeof(LiquidCell)))
+                automata.SwapCells(c.X, c.Y, X, Y);
+                if (c.GetType().IsSubclassOf(typeof(LiquidCell)))
                 {
-                    vVel = 1;
+                    yVel = 1;
                 }
-                if (i == (int)vVel)
+                if (i == (int)yVel)
                 {
                     return;
                 }
@@ -38,45 +38,19 @@ public abstract class DynamicSolidCell : SolidCell
         }
 
         // slides
-        bool side = Rand.Bool();
-        if (!side)
+        int side = Rand.Bool() ? 1 : -1;
+        for (int i = 0; i < 2; i++)
         {
-            // slide down-left
-            p = automata.GetCell(X - 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
+            side = -side;
+            c = automata.GetCell(X + side, Y + 1);
+            if (c != null && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                return;
-            }
-            // slide down-right
-            p = automata.GetCell(X + 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
+                automata.SwapCells(c.X, c.Y, X, Y);
+                AddToYVel(Settings.Gravity);
                 return;
             }
         }
-        else
-        {
-            // slide down-right
-            p = automata.GetCell(X + 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                return;
-            }
-            // slide down-left
-            p = automata.GetCell(X - 1, Y + 1);
-            if (p != null && (p.GetType() == typeof(AirCell) || p.GetType().IsSubclassOf(typeof(LiquidCell))))
-            {
-                automata.SwapCells(p.X, p.Y, X, Y);
-                AddToVVel(Settings.Gravity);
-                return;
-            }
-        }
-        vVel = 1;
+
+        yVel = 1;
     }
 }
