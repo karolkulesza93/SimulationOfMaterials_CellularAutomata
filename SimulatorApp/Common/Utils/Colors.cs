@@ -71,7 +71,7 @@ public static class Colors
         get
         {
             byte c = Rand.Byte(100, 150);
-            return new Color(c, c, c);
+            return new Color(c, c, c, 100);
         }
     }
 
@@ -80,7 +80,7 @@ public static class Colors
         get
         {
             byte c = Rand.Byte(180, 240);
-            return new Color(c, c, c);
+            return new Color(c, c, c, 100);
         }
     }
 
@@ -89,7 +89,7 @@ public static class Colors
         get
         {
             byte c = Rand.Byte();
-            return new Color(255, c, 130);
+            return new Color(255, c, 130, 180);
         }
     }
 
@@ -146,6 +146,15 @@ public static class Colors
         {
             byte c = Rand.Byte(5, 25);
             return new Color(c, c, c);
+        }
+    }
+
+    public static Color AcidVapor
+    {
+        get
+        {
+            byte c = Rand.Byte(20, 50);
+            return new Color(c, 255, c, 100);
         }
     }
 }

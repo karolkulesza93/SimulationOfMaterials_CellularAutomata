@@ -64,12 +64,8 @@ public class FireCell : DynamicSolidCell
         if (hasBeenUpdated) return;
 
         SetColor(Colors.Fire);
-        life--;
-        if (life <= 0)
-        {
-            automata.SetCellAs(typeof(AirCell), X, Y);
-            return;
-        }
+
+        DrainLife(automata);
 
         Ignite(automata);
 

@@ -86,14 +86,15 @@ public class InputHandler
         var mousePos = Mouse.GetPosition(window);
         if (previousPos.X >= 0)
         {
-            float num = 20;
-            var xStep = (mousePos.X - previousPos.X) / num;
-            var yStep = (mousePos.Y - previousPos.Y) / num;
+            float len = (float)Math.Sqrt(Math.Pow(mousePos.X - previousPos.X, 2) + Math.Pow(mousePos.Y - previousPos.Y, 2));
+
+            var xStep = (mousePos.X - previousPos.X) / len;
+            var yStep = (mousePos.Y - previousPos.Y) / len;
 
             float x = mousePos.X;
             float y = mousePos.Y;
 
-            for (int i = 0; i < num + 1; i++)
+            for (int i = 0; i < len + 1; i++)
             {
                 automata.Brush(currentType, (int)x, (int)y);
                 x += xStep;
@@ -131,7 +132,8 @@ public class InputHandler
             case Keyboard.Key.T: currentType = typeof(SteelCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
             case Keyboard.Key.O: currentType = typeof(OilCell); Console.ForegroundColor = ConsoleColor.Yellow; break;
             case Keyboard.Key.D: currentType = typeof(GunPowderCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
-            default: Console.WriteLine("No action\n"); return;
+            case Keyboard.Key.V: currentType = typeof(AcidVaporCell); Console.ForegroundColor = ConsoleColor.Green; break;
+            default: Console.Write("No action assigned: "); return;
         }
     }
 

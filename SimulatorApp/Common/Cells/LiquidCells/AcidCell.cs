@@ -13,6 +13,19 @@ public class AcidCell : LiquidCell
         vulnerableCells = new Type[] { typeof(SteelCell), typeof(WoodCell), typeof(LeavesCell) };
     }
 
+    public void ProduceVapor(CellularAutomata automata)
+    {
+        var produce = Rand.Probability(5);
+        if (produce)
+        {
+            Cell c = automata.GetCell(X, Y - 1);
+            if (c != null && c.GetType() == typeof(AirCell))
+            {
+                automata.SetCellAs(typeof(AcidVaporCell), X, Y - 1);
+            }
+        }
+    }
+
     public void Devour(CellularAutomata automata)
     {
         Cell c;
@@ -56,6 +69,8 @@ public class AcidCell : LiquidCell
         ExtinguishFire(automata);
 
         Devour(automata);
+
+        ProduceVapor(automata);
 
         base.Update(automata);
     }

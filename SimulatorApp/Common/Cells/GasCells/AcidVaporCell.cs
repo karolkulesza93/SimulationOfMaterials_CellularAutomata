@@ -3,12 +3,12 @@ using SimulatorApp.Common.Utils;
 
 namespace SimulatorApp.Common.Cells;
 
-public class SteamCell : GasCell
+public class AcidVaporCell : GasCell
 {
-    public SteamCell(int x, int y) : base(x, y)
+    public AcidVaporCell(int x, int y) : base(x, y)
     {
-        SetColor(Colors.Steam);
-        life = Rand.Int(30, 80);
+        SetColor(Colors.AcidVapor);
+        life = Rand.Int(5, 20);
     }
 
     public override void Update(CellularAutomata automata)

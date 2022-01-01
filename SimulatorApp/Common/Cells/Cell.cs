@@ -70,5 +70,15 @@ public abstract class Cell : Drawable
 
     }
 
+    public void DrainLife(CellularAutomata automata)
+    {
+        life--;
+        if (life <= 0)
+        {
+            automata.SetCellAs(typeof(AirCell), X, Y);
+            return;
+        }
+    }
+
     public void Draw(RenderTarget target, RenderStates states) => cell.Draw(target, states);
 }

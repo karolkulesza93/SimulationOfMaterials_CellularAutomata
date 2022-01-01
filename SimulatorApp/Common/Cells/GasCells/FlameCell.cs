@@ -14,12 +14,8 @@ public class FlameCell : GasCell
     public override void Update(CellularAutomata automata)
     {
         if (hasBeenUpdated) return;
-        life--;
-        if (life <= 0)
-        {
-            automata.Cells[X, Y] = new AirCell(X, Y);
-            return;
-        }
+
+        DrainLife(automata);
 
         base.Update(automata);
     }

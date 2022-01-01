@@ -16,6 +16,30 @@ Aktualizacja automatu:
 
 Aby zapobiec kilkukrotnej aktualizacji, komórki mają flagę hasBeenUpdated, która temu zapobiega.
 
+Wejścia:
+- Esc - wyjscie z aplikacji
+- 0-9 - wczytanie schematów automatu
+- Del - czyszczenie automatu
+- Space - rysowanie
+- A-Z - setowanie komórki rysowania:
+	- A - powietrze
+	- W - woda
+	- S - piasek
+	- R - skała
+	- F - ogień
+	- G - płomień
+	- L - liście
+	- K - drewno
+	- Z - dym
+	- X - para
+	- Q - kwas
+	- T - stal
+	- O - olej
+	- D - proch
+	- V - opary kwasu
+
+Wysztko logowane jest do konsoli.
+
 # Reguły
 
 1. Materiał sypki (np. piasek)
