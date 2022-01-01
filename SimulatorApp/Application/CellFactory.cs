@@ -13,6 +13,14 @@ public class CellFactory
             case nameof(SandCell): return new SandCell(x, y);
             case nameof(WaterCell): return new WaterCell(x, y);
             case nameof(RockCell): return new RockCell(x, y);
+            case nameof(FireCell): return new FireCell(x, y);
+            case nameof(FlameCell): return new FlameCell(x, y);
+            case nameof(WoodCell): return new WoodCell(x, y);
+            case nameof(LeavesCell): return new LeavesCell(x, y);
+            case nameof(SmokeCell): return new SmokeCell(x, y);
+            case nameof(SteamCell): return new SteamCell(x, y);
+            case nameof(AcidCell): return new AcidCell(x, y);
+            case nameof(SteelCell): return new SteelCell(x, y);
             default: return null;
         }
     }

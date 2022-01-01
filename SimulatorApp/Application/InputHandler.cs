@@ -110,7 +110,7 @@ public class InputHandler
     private void HandleClear()
     {
         automata.Reinitialize();
-        Console.WriteLine(" Automata reinitialized");
+        Console.WriteLine("Automata reinitialized");
     }
 
     private void HandleCellChange(Keyboard.Key key)
@@ -121,6 +121,14 @@ public class InputHandler
             case Keyboard.Key.W: currentType = typeof(WaterCell); Console.ForegroundColor = ConsoleColor.Blue; break;
             case Keyboard.Key.S: currentType = typeof(SandCell); Console.ForegroundColor = ConsoleColor.Yellow; break;
             case Keyboard.Key.R: currentType = typeof(RockCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
+            case Keyboard.Key.F: currentType = typeof(FireCell); Console.ForegroundColor = ConsoleColor.Red; break;
+            case Keyboard.Key.G: currentType = typeof(FlameCell); Console.ForegroundColor = ConsoleColor.Red; break;
+            case Keyboard.Key.L: currentType = typeof(LeavesCell); Console.ForegroundColor = ConsoleColor.DarkGreen; break;
+            case Keyboard.Key.K: currentType = typeof(WoodCell); Console.ForegroundColor = ConsoleColor.DarkRed; break;
+            case Keyboard.Key.Z: currentType = typeof(SmokeCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
+            case Keyboard.Key.X: currentType = typeof(SteamCell); Console.ForegroundColor = ConsoleColor.White; break;
+            case Keyboard.Key.Q: currentType = typeof(AcidCell); Console.ForegroundColor = ConsoleColor.Green; break;
+            case Keyboard.Key.T: currentType = typeof(SteelCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
             default: Console.WriteLine("No action\n"); return;
         }
     }

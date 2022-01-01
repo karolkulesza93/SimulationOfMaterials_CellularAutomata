@@ -11,7 +11,7 @@ public static class Colors
 
     public static Color Background
     {
-        get => Settings.LightMode ? new Color(198, 214, 244) : new Color(16, 21, 35);
+        get => Settings.LightMode ? new Color(198, 214, 244) : new Color(5, 10, 15);
     }
 
     public static Color Air
@@ -23,8 +23,8 @@ public static class Colors
     {
         get
         {
-            byte c = Rand.Byte(200);
-            return new Color(c, (byte)(c - 55), (byte)(c - 200));
+            byte c = Rand.Byte(220);
+            return new Color(c, (byte)(c - 55), (byte)(c - 190));
         }
     }
 
@@ -70,7 +70,7 @@ public static class Colors
     {
         get
         {
-            byte c = Rand.Byte(30, 100);
+            byte c = Rand.Byte(100, 150);
             return new Color(c, c, c);
         }
     }
@@ -84,21 +84,45 @@ public static class Colors
         }
     }
 
-    public static Color Fire
-    {
-        get
-        {
-            byte c = Rand.Byte();
-            return new Color(255, c, 100);
-        }
-    }
-
     public static Color Flame
     {
         get
         {
             byte c = Rand.Byte();
+            return new Color(255, c, 130);
+        }
+    }
+
+    public static Color Fire
+    {
+        get
+        {
+            byte c = Rand.Byte();
             return new Color(255, c, 0);
+        }
+    }
+
+    public static Color Acid
+    {
+        get
+        {
+            byte c = Rand.Byte(180, 230);
+            return new Color(c, 255, c, 120);
+        }
+    }
+
+    public static Color AcidDependingOnDepth(int d)
+    {
+        float x = (float)d / (float)Settings.Y;
+        return new Color(0, (byte)(255 - 150 * x), 0, 120);
+    }
+
+    public static Color Steel
+    {
+        get
+        {
+            byte c = Rand.Byte(200, 210);
+            return new Color(c, c, c);
         }
     }
 }

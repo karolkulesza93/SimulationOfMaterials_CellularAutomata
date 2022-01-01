@@ -23,7 +23,7 @@ public abstract class LiquidCell : Cell
         for (int i = 1; i <= yVel; i++)
         {
             c = automata.GetCell(X, Y + 1);
-            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
                 xVel = yVel;
@@ -43,14 +43,10 @@ public abstract class LiquidCell : Cell
             {
                 side = -side;
                 c = automata.GetCell(X + side, Y + 1);
-                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
                     xVel = side * (yVel + 3);
-                    if (c.GetType().IsSubclassOf(typeof(LiquidCell)))
-                    {
-                        yVel = 1;
-                    }
                     if (i == (int)yVel)
                     {
                         yVel = Settings.MaxVelocityV / 2;
@@ -66,13 +62,13 @@ public abstract class LiquidCell : Cell
         {
             for (int j = 1; j <= Math.Abs(xVel) + 1; j++)
             {
-                xVel += side * Settings.LiquidSpeed;
                 c = automata.GetCell(X + side, Y);
-                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
+                    AddToXVel(-side * Settings.LiquidSpeed);
                     c = automata.GetCell(X + side, Y + 1);
-                    if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+                    if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
                     {
                         automata.SwapCells(c.X, c.Y, X, Y);
                         AddToYVel(Settings.Gravity * 0.5f);
@@ -88,7 +84,6 @@ public abstract class LiquidCell : Cell
             }
             side = -side;
         }
-
         yVel = 1;
         xVel = 0;
     }

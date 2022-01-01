@@ -13,9 +13,14 @@ public static class Rand
         return (byte)_rnd.Next(min, max + 1);
     }
 
-    public static int Int(int min = -1000, int max = 1000)
+    public static int Int(int min, int max)
     {
         return _rnd.Next(min, max + 1);
+    }
+
+    public static int Int(int max)
+    {
+        return _rnd.Next(max + 1);
     }
 
     public static bool Bool()

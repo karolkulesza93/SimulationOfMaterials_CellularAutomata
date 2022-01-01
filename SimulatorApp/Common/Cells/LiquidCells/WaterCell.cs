@@ -13,6 +13,21 @@ public class WaterCell : LiquidCell
     public override void Update(CellularAutomata automata)
     {
         SetColor(Colors.WaterDependingOnDepth(Y));
+
+        // extinnguish fire
+        Cell c;
+        for (int y = Y - 1; y <= Y + 1; y++)
+        {
+            for (int x = X - 1; x <= X + 1; x++)
+            {
+                c = automata.GetCell(x, y);
+                if (c != null && (c.GetType() == typeof(FireCell) || c.GetType() == typeof(FlameCell)))
+                {
+                    automata.Cells[X, Y] = new SteamCell(x, y);
+                }
+            }
+        }
+
         base.Update(automata);
     }
 }

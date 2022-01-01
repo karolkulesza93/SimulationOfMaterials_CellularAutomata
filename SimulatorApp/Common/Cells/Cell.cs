@@ -14,6 +14,7 @@ public abstract class Cell : Drawable
     {
         get => (int)cell.Position.Y;
     }
+    public bool Flamable { get; init; }
 
     protected readonly RectangleShape cell;
     protected bool hasBeenUpdated;
@@ -65,11 +66,6 @@ public abstract class Cell : Drawable
     }
 
     public virtual void Update(CellularAutomata automata)
-    {
-
-    }
-
-    public virtual void Heat()
     {
 
     }

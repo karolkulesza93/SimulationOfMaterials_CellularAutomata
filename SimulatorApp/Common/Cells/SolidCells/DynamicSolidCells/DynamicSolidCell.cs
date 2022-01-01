@@ -23,7 +23,7 @@ public abstract class DynamicSolidCell : SolidCell
         for (int i = 1; i <= yVel; i++)
         {
             c = automata.GetCell(X, Y + 1);
-            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(LiquidCell))))
+            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(LiquidCell)) || c.GetType().IsSubclassOf(typeof(GasCell))))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
                 if (c.GetType().IsSubclassOf(typeof(LiquidCell)))
@@ -46,7 +46,8 @@ public abstract class DynamicSolidCell : SolidCell
             {
                 side = -side;
                 c = automata.GetCell(X + side, Y + 1);
-                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(LiquidCell))))
+                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(LiquidCell)) || c.GetType().IsSubclassOf(typeof(GasCell))))
+
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
                     if (c.GetType().IsSubclassOf(typeof(LiquidCell)))
@@ -62,8 +63,6 @@ public abstract class DynamicSolidCell : SolidCell
                 }
             }
         }
-
-
 
         yVel = 1;
     }
