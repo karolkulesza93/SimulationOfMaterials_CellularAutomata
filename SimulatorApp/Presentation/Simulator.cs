@@ -1,9 +1,10 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
-using SimulatorApp.Common;
+using SimulatorApp.Application;
+using SimulatorApp.Common.Utils;
 
-namespace SimulatorApp.Application;
+namespace SimulatorApp.Presentation;
 
 public class Simulator
 {
@@ -11,6 +12,7 @@ public class Simulator
     private CellularAutomata automata;
     private InputHandler inputHandler;
 
+#pragma warning disable CS8622
     public Simulator()
     {
         var x = (uint)(Settings.X - 1);
@@ -20,12 +22,20 @@ public class Simulator
         window = new RenderWindow(new VideoMode((uint)(x * Settings.Scale), (uint)(y * Settings.Scale)), "Simulator", Styles.Default);
         window.SetView(new View(new FloatRect(0, 0, x, y)));
         window.GetView().Size = new Vector2f(Settings.X * Settings.Scale, Settings.Y * Settings.Scale);
-
         window.Closed += OnClosed;
         window.KeyPressed += OnKeyPress;
-        window.MouseButtonPressed += OnMouseButtonPressed;
+        window.KeyReleased += OnKeyRelease;
+        window.MouseButtonPressed += OnMouseButtonPress;
+        window.MouseButtonReleased += OnMouseButtonRelease;
 
-        inputHandler = new InputHandler(automata);
+        inputHandler = new InputHandler(window, automata);
+    }
+
+    public void Run()
+    {
+        Console.WriteLine($"{DateTime.Now:HH:mm:ss} Starting simulator");
+        MainLoop();
+        Console.WriteLine($"{DateTime.Now:HH:mm:ss} Closing simulator");
     }
 
     public void MainLoop()
@@ -53,6 +63,7 @@ public class Simulator
     private void OnClosed(object sender, EventArgs e)
     {
         window.Close();
+        Environment.Exit(0);
     }
 
     private void OnKeyPress(object sender, KeyEventArgs e)
@@ -65,8 +76,18 @@ public class Simulator
         inputHandler.HandleKeyboardPress(e.Code);
     }
 
-    private void OnMouseButtonPressed(object sender, MouseButtonEventArgs e)
+    private void OnKeyRelease(object sender, KeyEventArgs e)
+    {
+        inputHandler.HandleKeyRelease(e.Code);
+    }
+
+    private void OnMouseButtonPress(object sender, MouseButtonEventArgs e)
     {
         inputHandler.HandleMouseClick(e.Button, e.X, e.Y);
+    }
+
+    private void OnMouseButtonRelease(object sender, MouseButtonEventArgs e)
+    {
+        inputHandler.HandleMouseButtonRelease(e.Button);
     }
 }

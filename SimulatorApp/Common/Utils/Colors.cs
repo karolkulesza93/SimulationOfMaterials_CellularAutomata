@@ -1,6 +1,6 @@
 ﻿using SFML.Graphics;
 
-namespace SimulatorApp.Common;
+namespace SimulatorApp.Common.Utils;
 
 public static class Colors
 {

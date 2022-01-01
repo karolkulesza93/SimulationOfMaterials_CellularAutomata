@@ -1,25 +1,28 @@
 ﻿using SFML.Graphics;
-using SimulatorApp.Common;
 using SimulatorApp.Common.Cells;
+using SimulatorApp.Common.Utils;
 
 namespace SimulatorApp.Application;
 
+#pragma warning disable CS8603
 public class CellularAutomata : Drawable
 {
     public Cell[,] Cells { get; init; }
 
+    private CellFactory cellFactory;
     private bool dir;
 
     public CellularAutomata()
     {
         dir = true;
         Cells = new Cell[Settings.X, Settings.Y];
+        cellFactory = new CellFactory();
 
         for (int y = 0; y < Cells.GetUpperBound(1); y++)
         {
             for (int x = 0; x < Cells.GetUpperBound(0); x++)
             {
-                Cells[x, y] = new AirCell(x, y);
+                Cells[x, y] = cellFactory.CreateCell(typeof(AirCell), x, y);
             }
         }
     }
@@ -91,6 +94,8 @@ public class CellularAutomata : Drawable
         }
     }
 
+    public bool InBounds(int x, int y) => x < 0 || x > Settings.X - 1 || y < 0 || y > Settings.Y - 1 ? false : true;
+
     public void DestroyCell(int x, int y)
     {
         try
@@ -109,7 +114,7 @@ public class CellularAutomata : Drawable
         Cells[ax, ay].SwapWith(Cells[bx, by]);
     }
 
-    public void SetAreaAs(Type type, int xMouse, int yMouse, int radius = 5, float density = 0.3f)
+    public void SetAreaRandomlyAs(Type type, int xMouse, int yMouse, int radius = 5, float density = 0.3f)
     {
         xMouse /= Settings.Scale;
         yMouse /= Settings.Scale;
@@ -121,7 +126,7 @@ public class CellularAutomata : Drawable
             int x = xMouse + Rand.Int(-radius, radius);
             int y = yMouse + Rand.Int(-radius, radius);
 
-            if (x < 0 || x > Settings.X - 1 || y < 0 || y > Settings.Y - 1)
+            if (!InBounds(x, y))
             {
                 continue;
             }
@@ -129,11 +134,29 @@ public class CellularAutomata : Drawable
             var cell = Cells[x, y];
             if (cell != null && radius >= Math.Sqrt(Math.Pow(x - xMouse, 2) + Math.Pow(y - yMouse, 2)))
             {
-                switch (type.Name)
+                Cells[x, y] = cellFactory.CreateCell(type, x, y);
+            }
+        }
+    }
+
+    public void Brush(Type type, int xMouse, int yMouse)
+    {
+        xMouse /= Settings.Scale;
+        yMouse /= Settings.Scale;
+
+        for (int y = yMouse - 1; y < yMouse + 1; y++)
+        {
+            for (int x = xMouse - 1; x < xMouse + 1; x++)
+            {
+                if (!InBounds(x, y))
                 {
-                    case nameof(SandCell): Cells[x, y] = new SandCell(x, y); break;
-                    case nameof(WaterCell): Cells[x, y] = new WaterCell(x, y); break;
-                    case nameof(RockCell): Cells[x, y] = new RockCell(x, y); break;
+                    continue;
+                }
+
+                var cell = Cells[x, y];
+                if (cell != null && 2 >= Math.Sqrt(Math.Pow(x - xMouse, 2) + Math.Pow(y - yMouse, 2)))
+                {
+                    Cells[x, y] = cellFactory.CreateCell(type, x, y);
                 }
             }
         }

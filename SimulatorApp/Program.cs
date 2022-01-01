@@ -1,3 +1,7 @@
-﻿using SimulatorApp.Application;
+﻿using SimulatorApp.Presentation;
 
-new Simulator().MainLoop();
+var builder = new SimulatorBuilder();
+
+var simulator = builder.Build();
+
+simulator.Run();

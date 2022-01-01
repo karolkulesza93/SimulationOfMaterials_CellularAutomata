@@ -1,4 +1,6 @@
-﻿namespace SimulatorApp.Common.Cells;
+﻿using SimulatorApp.Common.Utils;
+
+namespace SimulatorApp.Common.Cells;
 
 public class WoodCell : StaticSolidCell
 {

@@ -1,4 +1,5 @@
 ﻿using SimulatorApp.Application;
+using SimulatorApp.Common.Utils;
 
 namespace SimulatorApp.Common.Cells;
 
@@ -21,8 +22,8 @@ public abstract class LiquidCell : Cell
         // down
         for (int i = 1; i <= yVel; i++)
         {
-            c = automata.GetCell(X, Y + i);
-            if (c != null && (c.GetType() == typeof(AirCell)))
+            c = automata.GetCell(X, Y + 1);
+            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
                 if (i == (int)yVel)
@@ -35,16 +36,27 @@ public abstract class LiquidCell : Cell
 
         // slides
         int side = Rand.Bool() ? 1 : -1;
-        for (int i = 0; i < 2; i++)
+        for (int i = 1; i <= yVel / 2 + 1; i++)
         {
-            side = -side;
-            c = automata.GetCell(X + side, Y + 1);
-            if (c != null && (c.GetType() == typeof(AirCell)))
+            for (int j = 0; j < 2; j++)
             {
-                automata.SwapCells(c.X, c.Y, X, Y);
-                AddToYVel(Settings.Gravity * 0.5f);
-                xVel = side * yVel;
-                return;
+                side = -side;
+                c = automata.GetCell(X + side, Y + 1);
+                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+                {
+                    automata.SwapCells(c.X, c.Y, X, Y);
+                    xVel = side * (yVel + 3);
+                    if (c.GetType().IsSubclassOf(typeof(LiquidCell)))
+                    {
+                        yVel = 1;
+                    }
+                    if (i == (int)yVel)
+                    {
+                        yVel = Settings.MaxVelocityV / 2;
+                        return;
+                    }
+                    continue;
+                }
             }
         }
 
@@ -54,24 +66,24 @@ public abstract class LiquidCell : Cell
             for (int j = 1; j <= Math.Abs(xVel) + 1; j++)
             {
                 xVel += side * Settings.LiquidSpeed;
-                c = automata.GetCell(X + side * j, Y);
-                if (c != null && (c.GetType() == typeof(AirCell)))
+                c = automata.GetCell(X + side, Y);
+                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
+                    c = automata.GetCell(X + side, Y + 1);
+                    if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+                    {
+                        automata.SwapCells(c.X, c.Y, X, Y);
+                        AddToYVel(Settings.Gravity * 0.5f);
+                        return;
+                    }
                     if (j == Math.Abs(xVel) + 1)
                     {
                         return;
                     }
-                    c = automata.GetCell(X + side, Y + 1);
-                    if (c != null && (c.GetType() == typeof(AirCell)))
-                    {
-                        automata.SwapCells(c.X, c.Y, X, Y);
-                        AddToYVel(Settings.Gravity * 0.5f);
-                        xVel = side * yVel;
-                        return;
-                    }
                     continue;
                 }
+                break;
             }
             side = -side;
         }

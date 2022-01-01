@@ -1,4 +1,5 @@
 ﻿using SimulatorApp.Application;
+using SimulatorApp.Common.Utils;
 
 namespace SimulatorApp.Common.Cells;
 
