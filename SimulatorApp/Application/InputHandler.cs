@@ -129,6 +129,8 @@ public class InputHandler
             case Keyboard.Key.X: currentType = typeof(SteamCell); Console.ForegroundColor = ConsoleColor.White; break;
             case Keyboard.Key.Q: currentType = typeof(AcidCell); Console.ForegroundColor = ConsoleColor.Green; break;
             case Keyboard.Key.T: currentType = typeof(SteelCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
+            case Keyboard.Key.O: currentType = typeof(OilCell); Console.ForegroundColor = ConsoleColor.Yellow; break;
+            case Keyboard.Key.D: currentType = typeof(GunPowderCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
             default: Console.WriteLine("No action\n"); return;
         }
     }

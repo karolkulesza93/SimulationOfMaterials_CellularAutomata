@@ -13,12 +13,8 @@ public class AcidCell : LiquidCell
         vulnerableCells = new Type[] { typeof(SteelCell), typeof(WoodCell), typeof(LeavesCell) };
     }
 
-    public override void Update(CellularAutomata automata)
+    public void Devour(CellularAutomata automata)
     {
-        if (hasBeenUpdated) return;
-        SetColor(Colors.AcidDependingOnDepth(Y));
-
-        // acid
         Cell c;
         for (int y = Y - 1; y <= Y + 1; y++)
         {
@@ -28,7 +24,11 @@ public class AcidCell : LiquidCell
                 c = automata.GetCell(x, y);
                 if (c != null && c.GetType() == typeof(WaterCell))
                 {
-                    //
+                    var neutralize = Rand.Probability(20);
+                    if (neutralize)
+                    {
+                        automata.SetCellAs(typeof(WaterCell), X, Y);
+                    }
                 }
 
                 if (c != null && vulnerableCells.Contains(c.GetType()))
@@ -36,11 +36,26 @@ public class AcidCell : LiquidCell
                     var acid = Rand.Probability(2);
                     if (acid)
                     {
-                        automata.Cells[x, y] = new AirCell(x, y);
+                        automata.SetCellAs(typeof(SmokeCell), x, y);
+                        var dead = Rand.Probability(5);
+                        if (dead)
+                        {
+                            automata.SetCellAs(typeof(SmokeCell), X, Y);
+                        }
                     }
                 }
             }
         }
+    }
+
+    public override void Update(CellularAutomata automata)
+    {
+        if (hasBeenUpdated) return;
+        SetColor(Colors.AcidDependingOnDepth(Y));
+
+        ExtinguishFire(automata);
+
+        Devour(automata);
 
         base.Update(automata);
     }

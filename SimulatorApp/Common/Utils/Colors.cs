@@ -11,7 +11,7 @@ public static class Colors
 
     public static Color Background
     {
-        get => Settings.LightMode ? new Color(198, 214, 244) : new Color(5, 10, 15);
+        get => Settings.LightMode ? new Color(200, 220, 255) : new Color(5, 10, 15);
     }
 
     public static Color Air
@@ -30,13 +30,13 @@ public static class Colors
 
     public static Color Water
     {
-        get => new Color(0, 180, 255, 120);
+        get => new Color(0, 50, 255, 120);
     }
 
     public static Color WaterDependingOnDepth(int d)
     {
         float x = (float)d / (float)Settings.Y;
-        return new Color(0, (byte)(255 - 150 * x), (byte)(255 - 255 * x), 120);
+        return new Color(0, (byte)(50 - 50 * x), (byte)(255 - 255 * x), 120);
     }
 
     public static Color Rock
@@ -106,15 +106,29 @@ public static class Colors
     {
         get
         {
-            byte c = Rand.Byte(180, 230);
-            return new Color(c, 255, c, 120);
+            byte c = Rand.Byte(80, 100);
+            return new Color(c, 255, c, 180);
         }
     }
 
     public static Color AcidDependingOnDepth(int d)
     {
         float x = (float)d / (float)Settings.Y;
-        return new Color(0, (byte)(255 - 150 * x), 0, 120);
+        return new Color((byte)(180 - 180 * x), (byte)(255 - 50 * x), (byte)(30 - 30 * x), 180);
+    }
+
+    public static Color Oil
+    {
+        get
+        {
+            return new Color(255, 200, 0, 200);
+        }
+    }
+
+    public static Color OilDependingOnDepth(int d)
+    {
+        float x = (float)d / (float)Settings.Y;
+        return new Color((byte)(255 - 255 * x), (byte)(200 - 200 * x), 0, 200);
     }
 
     public static Color Steel
@@ -122,6 +136,15 @@ public static class Colors
         get
         {
             byte c = Rand.Byte(200, 210);
+            return new Color(c, c, c);
+        }
+    }
+
+    public static Color GunPowder
+    {
+        get
+        {
+            byte c = Rand.Byte(5, 25);
             return new Color(c, c, c);
         }
     }

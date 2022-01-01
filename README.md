@@ -6,9 +6,9 @@ Rodzaje komórek:
 - pusta (powietrze)
 - stałe:
 	- stałe statyczne (skała, stal, drewno, liście)
-	- stałe dynamiczne (piasek)
+	- stałe dynamiczne (piasek, proch)
 - gazowe (dym, para wodna, płomień)
-- płynne (woda, kwas)
+- płynne (woda, kwas, olej)
 
 Aktualizacja automatu:
 
@@ -31,6 +31,8 @@ Aby zapobiec kilkukrotnej aktualizacji, komórki mają flagę hasBeenUpdated, kt
 	- jeżeli tak, zamiana miejsc i delikatne zwiększenie prędkości
 	- jeżeli nie, sprawdzenie przeciwnego skosu
 
+Takie zachowanie zasymuluje usypywanie się piasku o kącie stoku naturalnego równym 45 stopni. 
+
 2. Materiał płynny (np. woda)
 
 ![](gifs/liquid_behaviour.gif)
@@ -42,6 +44,8 @@ Aby zapobiec kilkukrotnej aktualizacji, komórki mają flagę hasBeenUpdated, kt
 * po każdej iteracji sprawdzana jest komórka po skosie w dół
 	- sprawdzenie komórki pod spodem na skos
 	- jeżeli tak, zamiana miejsc i delikatne zwiększenie prędkości
+
+Takie zachowanie zasymuluje odpowiednie rozlewanie się wody, falowanie, tworzenie prawie płaskich powierzchni.
 
 3. Materiał stały (np. skała)
 * nic sie tutaj nie dzieje
@@ -72,8 +76,10 @@ Aby zapobiec kilkukrotnej aktualizacji, komórki mają flagę hasBeenUpdated, kt
 	- wydziela dym i płomienie
 * fizyka analogicznie do piasku, z różnicą jeśli trafi na wodę, zmienia ją w parę wodną
 
+Takie zachowanie zasymuluje rozprzestrzenianie się ognia.
+
 6. Kwas
 * przeżeranie (analogicznie do ognia, tyle że nie tworzy dymu, płomieni i nie rozprzestrzenia się)
 	- sprawdza 8 otaczających komórek czy są możliwe do przeżarcia
 	- jeśli tak, losowane jest, czy komórka zostanie przeżarta
-* fizyka analogiczna do wody
+* fizyka analogiczna do wody, z różnicą jeśli trafi na wodę, zostaje zneutralizowany

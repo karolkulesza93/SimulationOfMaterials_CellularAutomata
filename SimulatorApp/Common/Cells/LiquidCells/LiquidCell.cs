@@ -10,6 +10,24 @@ public abstract class LiquidCell : Cell
 
     }
 
+    public void ExtinguishFire(CellularAutomata automata)
+    {
+        Cell c;
+        for (int y = Y - 1; y <= Y + 1; y++)
+        {
+            for (int x = X - 1; x <= X + 1; x++)
+            {
+                if (x == X && y == Y) continue;
+                c = automata.GetCell(x, y);
+                if (c != null && (c.GetType() == typeof(FireCell) || c.GetType() == typeof(FlameCell)))
+                {
+                    automata.SetCellAs(typeof(SteamCell), x, y);
+                    automata.SetCellAs(typeof(SteamCell), X, Y);
+                }
+            }
+        }
+    }
+
     public override void Update(CellularAutomata automata)
     {
         if (hasBeenUpdated) return;
@@ -23,7 +41,10 @@ public abstract class LiquidCell : Cell
         for (int i = 1; i <= yVel; i++)
         {
             c = automata.GetCell(X, Y + 1);
-            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
+            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
+                (c.GetType() == typeof(AirCell) ||
+                (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
+                c.GetType().IsSubclassOf(typeof(GasCell))))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
                 xVel = yVel;
@@ -43,7 +64,10 @@ public abstract class LiquidCell : Cell
             {
                 side = -side;
                 c = automata.GetCell(X + side, Y + 1);
-                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
+                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
+                    (c.GetType() == typeof(AirCell) ||
+                    (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
+                    c.GetType().IsSubclassOf(typeof(GasCell))))
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
                     xVel = side * (yVel + 3);
@@ -63,12 +87,18 @@ public abstract class LiquidCell : Cell
             for (int j = 1; j <= Math.Abs(xVel) + 1; j++)
             {
                 c = automata.GetCell(X + side, Y);
-                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
+                if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
+                    (c.GetType() == typeof(AirCell) ||
+                    (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
+                    c.GetType().IsSubclassOf(typeof(GasCell))))
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
                     AddToXVel(-side * Settings.LiquidSpeed);
                     c = automata.GetCell(X + side, Y + 1);
-                    if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell) || c.GetType().IsSubclassOf(typeof(GasCell))))
+                    if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
+                        (c.GetType() == typeof(AirCell) ||
+                        (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
+                        c.GetType().IsSubclassOf(typeof(GasCell))))
                     {
                         automata.SwapCells(c.X, c.Y, X, Y);
                         AddToYVel(Settings.Gravity * 0.5f);

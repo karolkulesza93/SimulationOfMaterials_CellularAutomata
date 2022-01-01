@@ -11,6 +11,54 @@ public class FireCell : DynamicSolidCell
         life = Rand.Int(20, 100);
     }
 
+    public void Ignite(CellularAutomata automata)
+    {
+        for (int y = Y - 1; y <= Y + 1; y++)
+        {
+            for (int x = X - 1; x <= X + 1; x++)
+            {
+                Cell c = automata.GetCell(x, y);
+                if (c != null && c.Flamable)
+                {
+                    var lightUp = Rand.Probability(1);
+                    if (lightUp)
+                    {
+                        automata.SetCellAs(typeof(FireCell), x, y);
+                        life++;
+                    }
+                    if (c.GetType() == typeof(OilCell) || c.GetType() == typeof(GunPowderCell))
+                    {
+                        lightUp = Rand.Probability(15);
+                        if (lightUp)
+                        {
+                            automata.SetCellAs(typeof(FireCell), x, y);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public void ProduceSmokeAndFlame(CellularAutomata automata)
+    {
+        var produce = Rand.Probability(10);
+        if (produce)
+        {
+            Cell c = automata.GetCell(X, Y - 1);
+            if (c != null && c.GetType() == typeof(AirCell))
+            {
+                var dec = Rand.Bool();
+                if (dec)
+                {
+                    automata.SetCellAs(typeof(FlameCell), X, Y);
+                }
+                else
+                {
+                    automata.SetCellAs(typeof(SmokeCell), X, Y);
+                }
+            }
+        }
+    }
+
     public override void Update(CellularAutomata automata)
     {
         if (hasBeenUpdated) return;
@@ -19,47 +67,13 @@ public class FireCell : DynamicSolidCell
         life--;
         if (life <= 0)
         {
-            automata.Cells[X, Y] = new AirCell(X, Y);
+            automata.SetCellAs(typeof(AirCell), X, Y);
             return;
         }
 
-        Cell c;
+        Ignite(automata);
 
-        // ignite
-        for (int y = Y - 1; y <= Y + 1; y++)
-        {
-            for (int x = X - 1; x <= X + 1; x++)
-            {
-                c = automata.GetCell(x, y);
-                if (c != null && c.Flamable)
-                {
-                    var lightUp = Rand.Probability(1);
-                    if (lightUp)
-                    {
-                        automata.Cells[x, y] = new FireCell(x, y);
-                    }
-                }
-            }
-        }
-
-        // flame and smoke
-        var produce = Rand.Probability(3);
-        if (produce)
-        {
-            c = automata.GetCell(X, Y - 1);
-            if (c != null && c.GetType() == typeof(AirCell))
-            {
-                var dec = Rand.Bool();
-                if (dec)
-                {
-                    automata.Cells[X, Y] = new FlameCell(X, Y);
-                }
-                else
-                {
-                    automata.Cells[X, Y] = new SmokeCell(X, Y);
-                }
-            }
-        }
+        ProduceSmokeAndFlame(automata);
 
         base.Update(automata);
     }

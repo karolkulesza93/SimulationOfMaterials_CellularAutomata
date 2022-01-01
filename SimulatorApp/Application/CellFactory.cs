@@ -21,6 +21,8 @@ public class CellFactory
             case nameof(SteamCell): return new SteamCell(x, y);
             case nameof(AcidCell): return new AcidCell(x, y);
             case nameof(SteelCell): return new SteelCell(x, y);
+            case nameof(OilCell): return new OilCell(x, y);
+            case nameof(GunPowderCell): return new GunPowderCell(x, y);
             default: return null;
         }
     }

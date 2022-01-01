@@ -3,18 +3,17 @@ using SimulatorApp.Common.Utils;
 
 namespace SimulatorApp.Common.Cells;
 
-public class WaterCell : LiquidCell
+public class OilCell : LiquidCell
 {
-    public WaterCell(int x, int y) : base(x, y)
+    public OilCell(int x, int y) : base(x, y)
     {
-        SetColor(Colors.Water);
+        SetColor(Colors.Oil);
+        Flamable = true;
     }
 
     public override void Update(CellularAutomata automata)
     {
-        SetColor(Colors.WaterDependingOnDepth(Y));
-
-        ExtinguishFire(automata);
+        SetColor(Colors.OilDependingOnDepth(Y));
 
         base.Update(automata);
     }

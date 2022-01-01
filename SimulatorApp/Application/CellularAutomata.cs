@@ -94,16 +94,15 @@ public class CellularAutomata : Drawable
         }
     }
 
-    public bool InBounds(int x, int y) => x < 0 || x > Settings.X - 1 || y < 0 || y > Settings.Y - 1 ? false : true;
-
-    public void DestroyCell(int x, int y)
+    public void SetCellAs(Type type, int x, int y)
     {
-        try
+        if (InBounds(x, y))
         {
-            Cells[x, y] = new AirCell(x, y);
+            Cells[x, y] = cellFactory.CreateCell(type, x, y);
         }
-        catch { }
     }
+
+    public bool InBounds(int x, int y) => x < 0 || x > Settings.X - 1 || y < 0 || y > Settings.Y - 1 ? false : true;
 
     public void SwapCells(int ax, int ay, int bx, int by)
     {
