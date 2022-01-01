@@ -1,1 +1,3 @@
-Automat komórkowy symulujący zachowanie materiałów
+# Automat komórkowy symulujący zachowanie materiałów
+
+![](gifs/automata.gif)

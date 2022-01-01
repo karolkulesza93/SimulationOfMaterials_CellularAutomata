@@ -26,6 +26,7 @@ public abstract class LiquidCell : Cell
             if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
+                xVel = yVel;
                 if (i == (int)yVel)
                 {
                     return;
