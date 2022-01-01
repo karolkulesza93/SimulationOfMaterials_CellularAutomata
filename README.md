@@ -17,11 +17,16 @@ Aktualizacja automatu:
 Aby zapobiec kilkukrotnej aktualizacji, komórki mają flagę hasBeenUpdated, która temu zapobiega.
 
 Wejścia:
-- Esc - wyjscie z aplikacji
-- 0-9 - wczytanie schematów automatu
-- Del - czyszczenie automatu
-- Space - rysowanie
-- A-Z - setowanie komórki rysowania:
+* Esc - wyjscie z aplikacji
+* 0-9 - wczytanie schematów automatu
+* Del - czyszczenie automatu
+* Space - rysowanie
+* Mysz:
+	- Left - drobna zmiana
+	- Right - małe koło
+	- Button1 - duże koło
+	- Button2 - drobna zmiana na obszarze dużego koła
+* A-Z - setowanie komórki rysowania:
 	- A - powietrze
 	- W - woda
 	- S - piasek
