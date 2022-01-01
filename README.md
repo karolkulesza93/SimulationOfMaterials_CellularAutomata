@@ -1,0 +1,1 @@
+Automat komórkowy symulujący zachowanie materiałów
