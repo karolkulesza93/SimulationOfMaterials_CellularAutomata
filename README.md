@@ -56,8 +56,15 @@ Aby zapobiec kilkukrotnej aktualizacji, komórki mają flagę hasBeenUpdated, kt
 	- sprawdzenie, czy komórka nad na skos jest pusta
 	- jeżeli tak, zamiana miejsc
 	- jeżeli nie, sprawdzenie przeciwnego skosu
+* przesunięcia losowe
+	- wylosowanie prawdopodobieństwa i strony wzniesienia (lewo lub prawo)
+	- sprawdzenie, czy komórka jest pusta
+	- jeżeli tak, zamiana miejsc
 	
 5. Ogień
+
+![](gifs/fire_behaviour.gif)
+
 * losowy czas życia komórki
 * podpalenia
 	- sprawdza 8 otaczających komórek czy są możliwe do podpalenia
@@ -66,7 +73,7 @@ Aby zapobiec kilkukrotnej aktualizacji, komórki mają flagę hasBeenUpdated, kt
 * fizyka analogicznie do piasku, z różnicą jeśli trafi na wodę, zmienia ją w parę wodną
 
 6. Kwas
-* przeżeranie
+* przeżeranie (analogicznie do ognia, tyle że nie tworzy dymu, płomieni i nie rozprzestrzenia się)
 	- sprawdza 8 otaczających komórek czy są możliwe do przeżarcia
 	- jeśli tak, losowane jest, czy komórka zostanie przeżarta
 * fizyka analogiczna do wody

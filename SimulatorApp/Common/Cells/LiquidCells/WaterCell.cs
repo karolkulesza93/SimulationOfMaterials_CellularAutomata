@@ -20,6 +20,7 @@ public class WaterCell : LiquidCell
         {
             for (int x = X - 1; x <= X + 1; x++)
             {
+                if (x == X && y == Y) continue;
                 c = automata.GetCell(x, y);
                 if (c != null && (c.GetType() == typeof(FireCell) || c.GetType() == typeof(FlameCell)))
                 {
