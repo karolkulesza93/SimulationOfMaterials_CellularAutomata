@@ -28,8 +28,10 @@ public static class Rand
         return _rnd.Next(2) == 0;
     }
 
-    public static bool Probability(int percents)
+    public static bool Probability(float percents)
     {
+        if (percents < 0) throw new ArgumentOutOfRangeException();
+        if (percents < 1) return _rnd.Next(10000) <= percents * 100;
         return _rnd.Next(101) <= percents;
     }
 }

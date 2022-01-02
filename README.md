@@ -114,4 +114,4 @@ Takie zachowanie zasymuluje rozprzestrzenianie się ognia.
 	- jeśli tak, losowane jest, czy komórka zostanie przeżarta
 * fizyka analogiczna do wody, z różnicą jeśli trafi na wodę, zostaje zneutralizowany
 
-Wszystkie zachowania mają jak najbardziej przypominać realne zachowania.
+Wszystkie zachowania mają jak najbardziej przypominać realne zachowania. Możliwe, że nie wymieniłem wszystkich reguł/zachowań.

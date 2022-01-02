@@ -12,6 +12,7 @@ public class InputHandler
     private readonly RenderWindow window;
     private Type currentType;
     private Vector2i previousPos;
+    private int brushSize;
 
     public InputHandler(RenderWindow window, CellularAutomata automata)
     {
@@ -20,6 +21,7 @@ public class InputHandler
         this.automataGenerator = new AutomataGenerator(this.automata);
         previousPos = new Vector2i(-1, -1);
         currentType = typeof(AirCell);
+        brushSize = 2;
     }
 
     public void HandleMouseClick(Mouse.Button button, int xPos, int yPos)
@@ -54,6 +56,11 @@ public class InputHandler
         if (key == Keyboard.Key.Space)
         {
             HandleBrush();
+            return;
+        }
+        if (key == Keyboard.Key.Add || key == Keyboard.Key.Subtract)
+        {
+            HandleBrushSizeChange(key);
             return;
         }
         Console.Write($"{DateTime.Now:HH:mm:ss} ");
@@ -96,14 +103,14 @@ public class InputHandler
 
             for (int i = 0; i < len + 1; i++)
             {
-                automata.Brush(currentType, (int)x, (int)y);
+                automata.Brush(currentType, (int)x, (int)y, brushSize);
                 x += xStep;
                 y += yStep;
             }
         }
         else
         {
-            automata.Brush(currentType, mousePos.X, mousePos.Y);
+            automata.Brush(currentType, mousePos.X, mousePos.Y, brushSize);
         }
         previousPos = mousePos;
     }
@@ -112,6 +119,19 @@ public class InputHandler
     {
         automata.Reinitialize();
         Console.WriteLine("Automata reinitialized");
+    }
+
+    private void HandleBrushSizeChange(Keyboard.Key key)
+    {
+        if (key == Keyboard.Key.Add)
+        {
+            if (brushSize < 8) brushSize++;
+        }
+        else
+        {
+            if (brushSize > 2) brushSize--;
+        }
+        Console.WriteLine($"{DateTime.Now:HH:mm:ss} Brush size {brushSize}");
     }
 
     private void HandleCellChange(Keyboard.Key key)

@@ -21,7 +21,9 @@ public abstract class GasCell : Cell
 
         // up
         c = automata.GetCell(X, Y - 1);
-        if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+        if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
+            (c.GetType() == typeof(AirCell) ||
+            c.GetType().IsSubclassOf(typeof(LiquidCell))))
         {
             automata.SwapCells(c.X, c.Y, X, Y);
         }
@@ -32,7 +34,9 @@ public abstract class GasCell : Cell
         {
             side = -side;
             c = automata.GetCell(X + side, Y - 1);
-            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) && (c.GetType() == typeof(AirCell)))
+            if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
+                (c.GetType() == typeof(AirCell) ||
+                c.GetType().IsSubclassOf(typeof(LiquidCell))))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
                 return;

@@ -43,8 +43,7 @@ public abstract class LiquidCell : Cell
             c = automata.GetCell(X, Y + 1);
             if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
                 (c.GetType() == typeof(AirCell) ||
-                (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
-                c.GetType().IsSubclassOf(typeof(GasCell))))
+                (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell))))
             {
                 automata.SwapCells(c.X, c.Y, X, Y);
                 xVel = yVel;
@@ -66,8 +65,7 @@ public abstract class LiquidCell : Cell
                 c = automata.GetCell(X + side, Y + 1);
                 if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
                     (c.GetType() == typeof(AirCell) ||
-                    (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
-                    c.GetType().IsSubclassOf(typeof(GasCell))))
+                    (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell))))
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
                     xVel = side * (yVel + 3);
@@ -89,16 +87,14 @@ public abstract class LiquidCell : Cell
                 c = automata.GetCell(X + side, Y);
                 if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
                     (c.GetType() == typeof(AirCell) ||
-                    (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
-                    c.GetType().IsSubclassOf(typeof(GasCell))))
+                    (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell))))
                 {
                     automata.SwapCells(c.X, c.Y, X, Y);
                     AddToXVel(-side * Settings.LiquidSpeed);
                     c = automata.GetCell(X + side, Y + 1);
                     if (c != null && !c.GetType().IsSubclassOf(typeof(SolidCell)) &&
                         (c.GetType() == typeof(AirCell) ||
-                        (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell)) ||
-                        c.GetType().IsSubclassOf(typeof(GasCell))))
+                        (GetType() != typeof(OilCell) && c.GetType() == typeof(OilCell))))
                     {
                         automata.SwapCells(c.X, c.Y, X, Y);
                         AddToYVel(Settings.Gravity * 0.5f);

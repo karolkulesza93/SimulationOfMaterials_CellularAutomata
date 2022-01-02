@@ -8,7 +8,7 @@ public class FireCell : DynamicSolidCell
     public FireCell(int x, int y) : base(x, y)
     {
         SetColor(Colors.Fire);
-        life = Rand.Int(20, 100);
+        life = Rand.Int(30, 150);
     }
 
     public void Ignite(CellularAutomata automata)
@@ -20,7 +20,7 @@ public class FireCell : DynamicSolidCell
                 Cell c = automata.GetCell(x, y);
                 if (c != null && c.Flamable)
                 {
-                    var lightUp = Rand.Probability(1);
+                    var lightUp = Rand.Probability(0.5f);
                     if (lightUp)
                     {
                         automata.SetCellAs(typeof(FireCell), x, y);
@@ -38,26 +38,33 @@ public class FireCell : DynamicSolidCell
             }
         }
     }
-    public void ProduceSmokeAndFlame(CellularAutomata automata)
+
+    public void ProduceSmoke(CellularAutomata automata)
     {
         var produce = Rand.Probability(10);
         if (produce)
         {
             Cell c = automata.GetCell(X, Y - 1);
-            if (c != null && c.GetType() == typeof(AirCell))
+            if (c != null && c.GetType() == typeof(AirCell) && c.GetType() != typeof(FireCell))
             {
-                var dec = Rand.Bool();
-                if (dec)
-                {
-                    automata.SetCellAs(typeof(FlameCell), X, Y);
-                }
-                else
-                {
-                    automata.SetCellAs(typeof(SmokeCell), X, Y);
-                }
+                automata.SetCellAs(typeof(SmokeCell), X, Y - 1);
             }
         }
     }
+
+    public void ProduceFlame(CellularAutomata automata)
+    {
+        var produce = Rand.Probability(50);
+        if (produce)
+        {
+            Cell c = automata.GetCell(X, Y - 1);
+            if (c != null && (c.Flamable || c.GetType() == typeof(AirCell)) && c.GetType() != typeof(FireCell))
+            {
+                automata.SetCellAs(typeof(FlameCell), X, Y - 1);
+            }
+        }
+    }
+
 
     public override void Update(CellularAutomata automata)
     {
@@ -69,7 +76,9 @@ public class FireCell : DynamicSolidCell
 
         Ignite(automata);
 
-        ProduceSmokeAndFlame(automata);
+        ProduceSmoke(automata);
+
+        ProduceFlame(automata);
 
         base.Update(automata);
     }

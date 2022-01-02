@@ -63,7 +63,7 @@ public class CellularAutomata : Drawable
     private void SingleUpdateOperation(int x, int y)
     {
         var type = Cells[x, y].GetType();
-        if (type == typeof(AirCell) || type.IsSubclassOf(typeof(StaticSolidCell)))
+        if (type == typeof(AirCell))
         {
             return;
         }
@@ -138,14 +138,15 @@ public class CellularAutomata : Drawable
         }
     }
 
-    public void Brush(Type type, int xMouse, int yMouse)
+    public void Brush(Type type, int xMouse, int yMouse, int size)
     {
         xMouse /= Settings.Scale;
         yMouse /= Settings.Scale;
+        int half = size / 2;
 
-        for (int y = yMouse - 1; y < yMouse + 1; y++)
+        for (int y = yMouse - half; y < yMouse + half; y++)
         {
-            for (int x = xMouse - 1; x < xMouse + 1; x++)
+            for (int x = xMouse - half; x < xMouse + half; x++)
             {
                 if (!InBounds(x, y))
                 {
@@ -153,7 +154,7 @@ public class CellularAutomata : Drawable
                 }
 
                 var cell = Cells[x, y];
-                if (cell != null && 2 >= Math.Sqrt(Math.Pow(x - xMouse, 2) + Math.Pow(y - yMouse, 2)))
+                if (cell != null && half >= Math.Sqrt(Math.Pow(x - xMouse, 2) + Math.Pow(y - yMouse, 2)))
                 {
                     Cells[x, y] = cellFactory.CreateCell(type, x, y);
                 }
