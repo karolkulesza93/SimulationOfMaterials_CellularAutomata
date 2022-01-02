@@ -36,7 +36,7 @@ public static class Colors
     public static Color WaterDependingOnDepth(int d)
     {
         float x = (float)d / (float)Settings.Y;
-        return new Color(0, (byte)(50 - 50 * x), (byte)(255 - 255 * x), 120);
+        return new Color(0, (byte)(50 - 40 * x), (byte)(255 - 230 * x), 120);
     }
 
     public static Color Rock
@@ -89,7 +89,7 @@ public static class Colors
         get
         {
             byte c = Rand.Byte();
-            return new Color(255, c, 130, 180);
+            return new Color(255, c, 0, 150);
         }
     }
 
@@ -98,7 +98,7 @@ public static class Colors
         get
         {
             byte c = Rand.Byte();
-            return new Color(255, c, 0);
+            return new Color(255, c, 0, 200);
         }
     }
 
@@ -114,7 +114,7 @@ public static class Colors
     public static Color AcidDependingOnDepth(int d)
     {
         float x = (float)d / (float)Settings.Y;
-        return new Color((byte)(180 - 180 * x), (byte)(255 - 50 * x), (byte)(30 - 30 * x), 180);
+        return new Color((byte)(180 - 140 * x), (byte)(255 - 200 * x), (byte)(30 - 10 * x), 180);
     }
 
     public static Color Oil
@@ -155,6 +155,15 @@ public static class Colors
         {
             byte c = Rand.Byte(20, 50);
             return new Color(c, 255, c, 100);
+        }
+    }
+
+    public static Color Salt
+    {
+        get
+        {
+            byte c = Rand.Byte(240, 255);
+            return new Color(c, c, c);
         }
     }
 }

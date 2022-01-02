@@ -8,5 +8,6 @@ public class WoodCell : StaticSolidCell
     {
         SetColor(Colors.Wood);
         Flamable = true;
+        Digestable = true;
     }
 }

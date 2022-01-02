@@ -3,12 +3,12 @@
 ![](gifs/automata.gif)
 
 Rodzaje komórek:
-- pusta (powietrze)
-- stałe:
+* pusta (powietrze)
+* stałe:
 	- stałe statyczne (skała, stal, drewno, liście)
-	- stałe dynamiczne (piasek, proch)
-- gazowe (dym, para wodna, płomień)
-- płynne (woda, kwas, olej)
+	- stałe dynamiczne (piasek, proch, sól)
+* gazowe (dym, para wodna, płomień)
+* płynne (woda, kwas, olej)
 
 Aktualizacja automatu:
 
@@ -42,6 +42,7 @@ Wejścia:
 	- O - olej
 	- D - proch
 	- V - opary kwasu
+	- C - sól
 
 Wysztko logowane jest do konsoli.
 
@@ -112,3 +113,5 @@ Takie zachowanie zasymuluje rozprzestrzenianie się ognia.
 	- sprawdza 8 otaczających komórek czy są możliwe do przeżarcia
 	- jeśli tak, losowane jest, czy komórka zostanie przeżarta
 * fizyka analogiczna do wody, z różnicą jeśli trafi na wodę, zostaje zneutralizowany
+
+Wszystkie zachowania mają jak najbardziej przypominać realne zachowania.

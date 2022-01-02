@@ -133,6 +133,7 @@ public class InputHandler
             case Keyboard.Key.O: currentType = typeof(OilCell); Console.ForegroundColor = ConsoleColor.Yellow; break;
             case Keyboard.Key.D: currentType = typeof(GunPowderCell); Console.ForegroundColor = ConsoleColor.DarkGray; break;
             case Keyboard.Key.V: currentType = typeof(AcidVaporCell); Console.ForegroundColor = ConsoleColor.Green; break;
+            case Keyboard.Key.C: currentType = typeof(SaltCell); Console.ForegroundColor = ConsoleColor.White; break;
             default: Console.Write("No action assigned: "); return;
         }
     }

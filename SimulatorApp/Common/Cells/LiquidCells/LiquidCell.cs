@@ -21,7 +21,7 @@ public abstract class LiquidCell : Cell
                 c = automata.GetCell(x, y);
                 if (c != null && (c.GetType() == typeof(FireCell) || c.GetType() == typeof(FlameCell)))
                 {
-                    automata.SetCellAs(typeof(SteamCell), x, y);
+                    automata.SetCellAs(typeof(AirCell), x, y);
                     automata.SetCellAs(typeof(SteamCell), X, Y);
                 }
             }

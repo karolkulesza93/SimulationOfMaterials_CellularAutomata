@@ -15,6 +15,7 @@ public abstract class Cell : Drawable
         get => (int)cell.Position.Y;
     }
     public bool Flamable { get; init; }
+    public bool Digestable { get; init; }
 
     protected readonly RectangleShape cell;
     protected bool hasBeenUpdated;

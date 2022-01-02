@@ -24,6 +24,7 @@ public class CellFactory
             case nameof(OilCell): return new OilCell(x, y);
             case nameof(GunPowderCell): return new GunPowderCell(x, y);
             case nameof(AcidVaporCell): return new AcidVaporCell(x, y);
+            case nameof(SaltCell): return new SaltCell(x, y);
             default: throw new KeyNotFoundException(cellType.Name);
         }
     }

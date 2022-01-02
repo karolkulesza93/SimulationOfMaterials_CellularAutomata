@@ -8,5 +8,6 @@ public class LeavesCell : StaticSolidCell
     {
         SetColor(Colors.Leaves);
         Flamable = true;
+        Digestable = true;
     }
 }

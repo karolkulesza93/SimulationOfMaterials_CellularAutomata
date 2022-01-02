@@ -5,12 +5,9 @@ namespace SimulatorApp.Common.Cells;
 
 public class AcidCell : LiquidCell
 {
-    private Type[] vulnerableCells;
-
     public AcidCell(int x, int y) : base(x, y)
     {
         SetColor(Colors.Acid);
-        vulnerableCells = new Type[] { typeof(SteelCell), typeof(WoodCell), typeof(LeavesCell) };
     }
 
     public void ProduceVapor(CellularAutomata automata)
@@ -44,7 +41,7 @@ public class AcidCell : LiquidCell
                     }
                 }
 
-                if (c != null && vulnerableCells.Contains(c.GetType()))
+                if (c != null && c.Digestable)
                 {
                     var acid = Rand.Probability(2);
                     if (acid)
