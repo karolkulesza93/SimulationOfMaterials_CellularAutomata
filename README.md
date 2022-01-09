@@ -1,5 +1,7 @@
 # Automat komórkowy symulujący zachowanie materiałów
 
+https://youtu.be/VGYJkPlJklw
+
 ![](gifs/automata.gif)
 
 Rodzaje komórek:
