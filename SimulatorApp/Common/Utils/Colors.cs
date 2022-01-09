@@ -79,8 +79,8 @@ public static class Colors
     {
         get
         {
-            byte c = Rand.Byte(180, 240);
-            return new Color(c, c, c, 100);
+            byte c = Rand.Byte(210, 250);
+            return new Color(c, c, c, 180);
         }
     }
 
