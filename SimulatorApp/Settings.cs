@@ -8,5 +8,5 @@
     public static float Gravity = 0.5f;
     public static float LiquidSpeed = 1f;
     public static float Friction = 0.2f;
-    public static bool LightMode = false;
+    public static bool LightMode = true;
 }

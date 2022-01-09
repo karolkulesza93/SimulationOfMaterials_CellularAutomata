@@ -29,24 +29,27 @@ public class CellularAutomata : Drawable
 
     public void Update()
     {
-        for (int y = Cells.GetUpperBound(1) - 1; y >= 0; y--)
+        Task.Run(() =>
         {
-            if (dir)
+            for (int y = Cells.GetUpperBound(1) - 1; y >= 0; y--)
             {
-                for (int x = 0; x < Cells.GetUpperBound(0); x++)
+                if (dir)
                 {
-                    SingleUpdateOperation(x, y);
+                    for (int x = 0; x < Cells.GetUpperBound(0); x++)
+                    {
+                        Cells[x, y].Update(this);
+                    }
+                }
+                else
+                {
+                    for (int x = Cells.GetUpperBound(0) - 1; x >= 0; x--)
+                    {
+                        Cells[x, y].Update(this);
+                    }
                 }
             }
-            else
-            {
-                for (int x = Cells.GetUpperBound(0) - 1; x >= 0; x--)
-                {
-                    SingleUpdateOperation(x, y);
-                }
-            }
-        }
-        dir = !dir;
+            dir = !dir;
+        });
     }
 
     public void Reinitialize()
@@ -58,16 +61,6 @@ public class CellularAutomata : Drawable
                 Cells[x, y] = new AirCell(x, y);
             }
         }
-    }
-
-    private void SingleUpdateOperation(int x, int y)
-    {
-        var type = Cells[x, y].GetType();
-        if (type == typeof(AirCell))
-        {
-            return;
-        }
-        Cells[x, y].Update(this);
     }
 
     public void Draw(RenderTarget target, RenderStates states)

@@ -11,7 +11,7 @@ public static class Colors
 
     public static Color Background
     {
-        get => Settings.LightMode ? new Color(200, 220, 255) : new Color(5, 10, 15);
+        get => Settings.LightMode ? new Color(150, 200, 255) : new Color(5, 10, 15);
     }
 
     public static Color Air
