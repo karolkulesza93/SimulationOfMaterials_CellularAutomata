@@ -22,6 +22,7 @@ public class Simulator
         window = new RenderWindow(new VideoMode((uint)(x * Settings.Scale), (uint)(y * Settings.Scale)), "Simulator", Styles.Default);
         window.SetView(new View(new FloatRect(0, 0, x, y)));
         window.GetView().Size = new Vector2f(Settings.X * Settings.Scale, Settings.Y * Settings.Scale);
+
         window.Closed += OnClosed;
         window.KeyPressed += OnKeyPress;
         window.KeyReleased += OnKeyRelease;
@@ -38,7 +39,7 @@ public class Simulator
         Console.WriteLine($"{DateTime.Now:HH:mm:ss} Closing simulator");
     }
 
-    public void MainLoop()
+    private void MainLoop()
     {
         while (window.IsOpen)
         {
@@ -48,13 +49,13 @@ public class Simulator
         }
     }
 
-    public void DrawAndDisplay()
+    private void DrawAndDisplay()
     {
         window.Draw(automata);
         window.Display();
     }
 
-    public void ClearWindow()
+    private void ClearWindow()
     {
         window.DispatchEvents();
         window.Clear(Colors.Background);

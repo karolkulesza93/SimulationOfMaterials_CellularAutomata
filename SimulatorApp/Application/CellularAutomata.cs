@@ -29,27 +29,24 @@ public class CellularAutomata : Drawable
 
     public void Update()
     {
-        Task.Run(() =>
+        for (int y = Cells.GetUpperBound(1) - 1; y >= 0; y--)
         {
-            for (int y = Cells.GetUpperBound(1) - 1; y >= 0; y--)
+            if (dir)
             {
-                if (dir)
+                for (int x = 0; x < Cells.GetUpperBound(0); x++)
                 {
-                    for (int x = 0; x < Cells.GetUpperBound(0); x++)
-                    {
-                        Cells[x, y].Update(this);
-                    }
-                }
-                else
-                {
-                    for (int x = Cells.GetUpperBound(0) - 1; x >= 0; x--)
-                    {
-                        Cells[x, y].Update(this);
-                    }
+                    Cells[x, y].Update(this);
                 }
             }
-            dir = !dir;
-        });
+            else
+            {
+                for (int x = Cells.GetUpperBound(0) - 1; x >= 0; x--)
+                {
+                    Cells[x, y].Update(this);
+                }
+            }
+        }
+        dir = !dir;
     }
 
     public void Reinitialize()
